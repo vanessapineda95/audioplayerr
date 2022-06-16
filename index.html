@@ -1,0 +1,189 @@
+<!-- -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
+</head> 
+
+<body>
+    <!-- Player -->
+    <main class="player">
+        <!-- Title -->
+        <h2 class="title" id="title">Sonido de prueba</h2>
+        <!-- Audio HTML Media elememt 
+        <audio src="" id="audio"></audio>-->
+        <!-- Progress bar -->
+        <div id="progress-container" class="progress-container">
+            <section id="progress" class="progress"></section>
+        </div> 
+        <!-- Controls -->
+        <div class="speedcontrolcontainer"></div>
+        <section class="controls">
+            <button onclick="play();" class="play">
+                <i id="play" class="fas fa-play"></i>
+            </button>
+        </section>
+        <div class="speedcontrolcontainer">
+            <div>
+              <label for="pbrate">Speed:</label>
+              <input type="range" id="pbrate" min=".1" max="2" value="10" step=".1">
+              <span></span>
+            </div>
+            <label for="pbrate">Normal Speed is 100%</label>
+          </div>
+
+    </main>
+</body>
+
+<script>
+    const audio = new Audio("https://vincens2005.github.io/vr/Nyan%20Cat%20[original].mp3");
+    const playbackrate = document.querySelector('.speedcontrolcontainer input');
+    const display = document.querySelector('.speedcontrolcontainer span');
+
+    const displayvalue = val => {
+    return parseInt(val * 100, 10) + '%'
+    }
+    if (window.localStorage.pbspeed) {
+    audio.playbackRate = window.localStorage.pbspeed;
+    playbackrate.value = window.localStorage.pbspeed;
+    }
+    display.innerText = displayvalue(audio.playbackRate);
+    playbackrate.addEventListener('change', e => {
+    audio.playbackRate = playbackrate.value;
+    display.innerText = displayvalue(playbackrate.value);
+    window.localStorage.pbspeed = playbackrate.value;
+    });
+
+    function play() {
+        audio.play();
+
+    };
+    
+</script>
+
+<style>
+        /* Common */
+        * { box-sizing: border-box;}
+
+        html, body {
+        height: 100%;
+        }
+
+        body {
+        font-family: sans-serif;
+        background-color: lighgray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+        /* Player */
+        .player {
+        min-width: 320px;
+        background-image: linear-gradient(#7c0000, #d92f37);
+        border-radius: 1rem;
+        padding: 2rem;
+        color: white;
+        box-shadow: 2px 2px 3px black;
+        }
+
+        /* Title */
+        .title {
+        margin-top: 0;
+        text-align: center;
+        color: white;
+        }
+
+        /* Cover */
+        .cover {
+        width: 128px;
+        height: auto;
+        border-radius: .3rem;
+        display: block;
+        margin: 0 auto 1rem auto;
+        }
+
+        /* Progress */
+        .progress-container {
+        height: .6rem;
+        background-color: white;
+        margin-bottom: 1rem;
+        }
+
+        .progress {
+        background-color: goldenrod;
+        width: 0;
+        height: 100%;
+        }
+
+        /* Controls */
+        .controls {
+        display: flex;
+        justify-content: space-evenly;
+        margin-bottom: 1rem;
+        }
+
+        .controls button {
+        background-color: transparent;
+        border: none;
+        }
+
+        .controls i {
+        font-size: 1.7rem;
+        color: white;
+        }
+
+        /* Songs */
+        .songs {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        }
+
+        .songs li {
+        margin-bottom: 1rem;
+        }
+
+        .songs a {
+        color: #ffffff;
+        text-decoration: none;
+        }
+
+        .songs a.active {
+        color: white;
+        font-weight: bold;
+        }
+
+        .speedcontrolcontainer audio {
+        width: 100%;
+        display: block;
+        }
+
+        .speedcontrolcontainer div {
+        display: flex;
+        padding: .5em 0;
+        gap: 5px;
+        }
+        .speedcontrolcontainer label {
+        font-family: Sans-serif;
+        color: white;
+        flex: 1
+        }
+        .speedcontrolcontainer input[type="range"] {
+        flex: 5
+        }
+        .speedcontrolcontainer span {
+        flex: 1;
+        text-align: center;
+        }
+</style>
+</html>
+
+
+
+
